@@ -297,11 +297,12 @@ class RNFirebaseNotificationManager {
 
   private void cancelAlarm(String notificationId) {
     Intent notificationIntent = new Intent(context, RNFirebaseNotificationReceiver.class);
+    int flags = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE : PendingIntent.FLAG_UPDATE_CURRENT;
     PendingIntent pendingIntent = PendingIntent.getBroadcast(
       context,
       notificationId.hashCode(),
       notificationIntent,
-      PendingIntent.FLAG_UPDATE_CURRENT
+      flags
     );
     alarmManager.cancel(pendingIntent);
   }
